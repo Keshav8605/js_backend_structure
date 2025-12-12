@@ -1,0 +1,23 @@
+{
+  "name": "js_file_structure",
+  "version": "1.0.0",
+  "description": "this is the files trucutr of js backend how it should be",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "backend",
+    "frankie"
+  ],
+  "author": "Keshav Garg",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11",
+    "prettier": "^3.7.4"
+  }
+}

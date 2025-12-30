@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
   },
   "keywords": [
     "javascript",
@@ -15,12 +15,11 @@
   "author": "Keshav Garg",
   "license": "ISC",
   "dependencies": {
-    "cookie-parser": "^1.4.7",
-    "cookies-parser": "^1.2.0",
-    "cors": "^2.8.5",
+    "cloudinary": "^2.8.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "mongoose": "^9.0.2"
+    "mongoose": "^9.0.2",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.11",

@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 
 
 
@@ -22,7 +23,7 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             trim: true,
         },
-        fullname: {
+        fullName: {
             type: String,
             required: true,
             trim: true,
@@ -54,12 +55,12 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-userSchema.pre("save", async function (next){
+userSchema.pre("save", async function (){
 
-    if(!this.isModified("password")) return next();
+    if(!this.isModified("password")) return;
 
-    this.password = bcrypt.hash(this.password, 10); //here 10 indicates no. of rounds
-    next()
+    this.password = await bcrypt.hash(this.password, 10); //here 10 indicates no. of rounds
+    
 
 });
 

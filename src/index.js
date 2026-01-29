@@ -1,12 +1,6 @@
 import "dotenv/config";
-
-
-
-
 import { app } from "./app.js";
 import CONNECT_DB from "./db/index.js";
-
-
 
 CONNECT_DB().then(
     ()=>{

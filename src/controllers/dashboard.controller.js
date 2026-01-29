@@ -7,15 +7,15 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 
 const getChannelStats = asyncHandler(async (req, res) => {
-    // Get the channel stats for the current user
+   
     const userId = req.user._id
 
-    // Get total subscribers
+   
     const totalSubscribers = await Subscription.countDocuments({
         channel: userId
     })
 
-    // Get total videos and total views using aggregation
+  
     const videoStats = await Video.aggregate([
         {
             $match: {
@@ -30,8 +30,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
             }
         }
     ])
-
-    // Get total likes on all videos of the channel
+l
     const totalLikes = await Like.countDocuments({
         video: {
             $in: await Video.find({ owner: userId }).distinct("_id")
@@ -53,7 +52,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
 })
 
 const getChannelVideos = asyncHandler(async (req, res) => {
-    // Get all videos uploaded by the current user's channel
+
     const userId = req.user._id
 
     const videos = await Video.aggregate([

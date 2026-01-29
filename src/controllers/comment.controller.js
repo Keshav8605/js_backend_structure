@@ -8,12 +8,10 @@ const getVideoComments = asyncHandler(async (req, res) => {
     const {videoId} = req.params
     const {page = 1, limit = 10} = req.query
 
-    // Validate videoId
     if (!mongoose.isValidObjectId(videoId)) {
         throw new ApiError(400, "Invalid video ID")
     }
 
-    // Create aggregation pipeline
     const commentsAggregate = Comment.aggregate([
         {
             $match: {
@@ -72,17 +70,14 @@ const addComment = asyncHandler(async (req, res) => {
     const {videoId} = req.params
     const {content} = req.body
 
-    // Validate videoId
     if (!mongoose.isValidObjectId(videoId)) {
         throw new ApiError(400, "Invalid video ID")
     }
 
-    // Validate content
     if (!content || content.trim() === "") {
         throw new ApiError(400, "Content is required")
     }
 
-    // Create comment
     const comment = await Comment.create({
         content: content.trim(),
         video: videoId,
@@ -104,29 +99,27 @@ const updateComment = asyncHandler(async (req, res) => {
     const {commentId} = req.params
     const {content} = req.body
 
-    // Validate commentId
     if (!mongoose.isValidObjectId(commentId)) {
         throw new ApiError(400, "Invalid comment ID")
     }
 
-    // Validate content
     if (!content || content.trim() === "") {
         throw new ApiError(400, "Content is required")
     }
 
-    // Find comment
+
     const comment = await Comment.findById(commentId)
 
     if (!comment) {
         throw new ApiError(404, "Comment not found")
     }
 
-    // Verify ownership
+ 
     if (comment.owner.toString() !== req.user._id.toString()) {
         throw new ApiError(403, "You are not authorized to update this comment")
     }
 
-    // Update comment
+
     const updatedComment = await Comment.findByIdAndUpdate(
         commentId,
         {
@@ -149,24 +142,23 @@ const updateComment = asyncHandler(async (req, res) => {
 const deleteComment = asyncHandler(async (req, res) => {
     const {commentId} = req.params
 
-    // Validate commentId
+  
     if (!mongoose.isValidObjectId(commentId)) {
         throw new ApiError(400, "Invalid comment ID")
     }
 
-    // Find comment
+
     const comment = await Comment.findById(commentId)
 
     if (!comment) {
         throw new ApiError(404, "Comment not found")
     }
 
-    // Verify ownership
+    
     if (comment.owner.toString() !== req.user._id.toString()) {
         throw new ApiError(403, "You are not authorized to delete this comment")
     }
 
-    // Delete comment
     await Comment.findByIdAndDelete(commentId)
 
     return res

@@ -9,18 +9,18 @@ import {asyncHandler} from "../utils/asyncHandler.js"
 const toggleSubscription = asyncHandler(async (req, res) => {
     const {channelId} = req.params
 
-    // Validate channelId
+ 
     if (!isValidObjectId(channelId)) {
         throw new ApiError(400, "Invalid channel ID")
     }
 
-    // Check if channel exists
+   
     const channel = await User.findById(channelId)
     if (!channel) {
         throw new ApiError(404, "Channel not found")
     }
 
-    // Prevent users from subscribing to themselves
+    
     if (channelId === req.user._id.toString()) {
         throw new ApiError(400, "You cannot subscribe to your own channel")
     }
